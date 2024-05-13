@@ -1,0 +1,41 @@
+.task-container {
+    margin-top: 20px;
+  }
+  
+  .task-input {
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .tasks-list {
+    width: 100%;
+  }
+  
+  .task-item {
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: #ffeecc;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .task-content {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .toggle-button {
+    font-size: 12px;
+  }
+  
+  .back-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+  }
+  
