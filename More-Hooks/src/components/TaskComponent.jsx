@@ -1,18 +1,20 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useReducer, useRef, useEffect } from 'react';
 import './Task.css';
 
 const TaskComponent = () => {
   const inputRef = useRef();
   const backButtonRef = useRef();
+  const scrollButtonRef = useRef();
   const [tasks, dispatch] = useReducer(taskReducer, []);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.pageYOffset > 100) {
         backButtonRef.current.style.display = 'block';
+        scrollButtonRef.current.style.display = 'block';
       } else {
         backButtonRef.current.style.display = 'none';
+        scrollButtonRef.current.style.display = 'none'; 
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -41,11 +43,10 @@ const TaskComponent = () => {
     inputRef.current.focus();
   };
 
-  // eslint-disable-next-line no-unused-vars
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -59,22 +60,38 @@ const TaskComponent = () => {
         className="task-input"
       />
       <div className="tasks-list">
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <div key={task.id} className="task-item">
             <div className="task-content">
-              {task.hidden ? <span>The Content is hidden</span> : <span>{task.text}</span>}
+              {task.hidden ? (
+                <span>The Content is hidden</span>
+              ) : (
+                <span>{task.text}</span>
+              )}
             </div>
             <div>
-              <button onClick={() => toggleTaskVisibility(task.id)} className="toggle-button">
+              <button
+                onClick={() => toggleTaskVisibility(task.id)}
+                className="toggle-button"
+              >
                 Toggle
               </button>
             </div>
           </div>
         ))}
       </div>
-      <button ref={backButtonRef} onClick={scrollToInput} className="back-button">
+      <button ref={backButtonRef} onClick={scrollToTop} className="back-button">
         Get Back
       </button>
+      <div>
+        <button
+          ref={scrollButtonRef}
+          onClick={scrollToInput}
+          className="scroll-button"
+        >
+          Get back to Writing
+        </button>
+      </div>
     </div>
   );
 };
@@ -82,9 +99,12 @@ const TaskComponent = () => {
 const taskReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TASK':
-      return [...state, { id: state.length, text: action.payload, hidden: false }];
+      return [
+        ...state,
+        { id: state.length, text: action.payload, hidden: false },
+      ];
     case 'TOGGLE_TASK':
-      return state.map(task =>
+      return state.map((task) =>
         task.id === action.payload ? { ...task, hidden: !task.hidden } : task
       );
     default:
